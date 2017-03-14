@@ -11,6 +11,9 @@ import android.widget.TextView;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Observer mObserver = new Observer<String>() {
+        Observer<String > mObserver = new Observer<String>() {
+
+            @Override
+            public void onNext(String s) {
+                tv_reactor.append(s);
+            }
 
             @Override
             public void onCompleted() {
@@ -42,26 +50,30 @@ public class MainActivity extends AppCompatActivity {
             public void onError(Throwable e) {
                 Log.d("error","error");
             }
-
-            @Override
-            public void onNext(String s) {
-                tv_reactor.append(s);
-            }
         };
+
+        Observable.just(1,2,3,4)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        Log.d("test","number:"+integer);
+                    }
+                });
     }
 
         public void onClickObservable(View v) {
-//        Observable<String> mObservable = Observable.create(new Observable.OnSubscribe<String>() {
-//            @Override
-//            public void call(Subscriber<? super String> subscriber) {
-//                subscriber.onNext("create 1");
-//                subscriber.onNext("create 2");
-//                subscriber.onCompleted();
-//            }
-//
-//        });
-//        mObservable.subscribe(MainActivity.mObserver);
-            Observable observable = Observable.just("hello","world");
-            observable.subscribe(mObserver);
-    }
+            Observable<String> mObservable = Observable.create(new Observable.OnSubscribe<String>() {
+                @Override
+                public void call(Subscriber<? super String> subscriber) {
+                    subscriber.onNext("create 1");
+                    subscriber.onCompleted();
+                }
+
+            });
+            mObservable.subscribe(MainActivity.mObserver);
+        }
+
+
 }
