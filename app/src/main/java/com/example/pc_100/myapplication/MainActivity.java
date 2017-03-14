@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static Observer<String> mObserver;
     private TextView tv_reactor;
 
+    private String tag = "ReactiveX";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        Action1<String> onNextAction = new Action1<String>() {
+            @Override
+            public void call(String s) {
+                Log.d(tag,s);
+            }
+        };
+
         Observable.just(1,2,3,4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("test","number:"+integer);
                     }
                 });
+
+        Observable.create(new Observable.OnSubscribe<String >() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext(" ");
+            }
+        });
+
     }
 
         public void onClickObservable(View v) {
