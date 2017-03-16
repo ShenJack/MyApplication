@@ -1,6 +1,7 @@
 package com.example.pc_100.myapplication;
 
 import android.content.Intent;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -60,15 +62,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        Action1<Integer> action1 = new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                Log.d("test","number:"+integer);
+            }
+        };
         Observable.just(1,2,3,4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        Log.d("test","number:"+integer);
-                    }
-                });
+                .subscribe(action1);
 
         Observable.create(new Observable.OnSubscribe<String >() {
             @Override
@@ -88,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             });
-            mObservable.subscribe(MainActivity.mObserver);
+            mObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).
+                    subscribe(MainActivity.mObserver);
         }
 
 
