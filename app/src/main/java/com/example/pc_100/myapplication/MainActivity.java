@@ -3,6 +3,7 @@ package com.example.pc_100.myapplication;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.pc_100.myapplication.data.MainContract;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import rx.Observable;
 import rx.Observer;
@@ -31,11 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private String tag = "ReactiveX";
     private MainAdapter mMainAdapter;
     private SQLiteDatabase mDb;
+    private BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bottomBar = findViewById(R.id.bottombar);
+
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                if(tabId == R.id.tab_favourites){
+
+                }
+            }
+        });
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
