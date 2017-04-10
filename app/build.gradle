@@ -29,6 +29,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:customtabs:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.roughike:bottom-bar:2.3.0'
     compile 'com.android.support:preference-v7:25.3.1'
     compile 'io.reactivex:rxandroid:1.0.1'

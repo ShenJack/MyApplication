@@ -42,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomBar = findViewById(R.id.bottombar);
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                if(tabId == R.id.tab_favourites){
-
-                }
+//                if(tabId == R.id.tab_todo){
+//
+//                }
             }
         });
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         return mDb.insert(MainContract.MainEntry.TABLE_NAME, null, cv);
     }
 
-    private long initializeData(){
-        ContentValues cv[] = new ContentValues()[];
-    }
+//    private long initializeData(){
+//        ContentValues cv[] = new ContentValues()[];
+//    }
 }

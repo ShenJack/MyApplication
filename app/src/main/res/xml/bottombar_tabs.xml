@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
-    <tab
-        id="@+id/tab_modules"
-        icon="@drawable/ic_favorites"
-        title="Module" />
-    <tab
-        id="@+id/tab_todo"
-        icon="@drawable/ic_favorites"
-        title="Todo" />
-    <tab
-        id="@+id/tab_mine"
-        icon="@drawable/ic_favorites"
-        title="Mine" />
+    <!--<tab-->
+        <!--id="@+id/tab_modules"-->
+        <!--icon = "@draw"-->
+        <!--title="Module" />-->
+    <!--<tab-->
+        <!--id="@+id/tab_todo"-->
+        <!--icon="@drawable/ic_favorites"-->
+        <!--title="Todo" />-->
+    <!--<tab-->
+        <!--id="@+id/tab_mine"-->
+        <!--icon="@drawable/ic_favorites"-->
+        <!--title="Mine" />-->
+    <!--<tab-->
+        <!--id = "+id"-->
+        <!--/>-->
 </tabs>
