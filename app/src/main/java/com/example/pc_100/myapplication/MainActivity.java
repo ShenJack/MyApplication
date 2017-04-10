@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MainAdapter mMainAdapter;
     private SQLiteDatabase mDb;
     private BottomBar bottomBar;
+    private boolean initialized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private long addNewModule(String name, int partySize) {
+    private long addNewModule(String name, String descripition) {
         ContentValues cv = new ContentValues();
         cv.put(MainContract.MainEntry.COLUMN_MODULE_NAME, name);
-        cv.put(MainContract.MainEntry.COLUMN_MODULE_DESCRIPTION, partySize);
+        cv.put(MainContract.MainEntry.COLUMN_MODULE_DESCRIPTION, descripition);
         return mDb.insert(MainContract.MainEntry.TABLE_NAME, null, cv);
+    }
+
+    private long initializeData(){
+        ContentValues cv[] = new ContentValues()[];
     }
 }

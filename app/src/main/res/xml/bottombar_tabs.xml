@@ -5,9 +5,9 @@
         icon="@drawable/ic_favorites"
         title="Module" />
     <tab
-        id="@+id/tab_favorites"
+        id="@+id/tab_todo"
         icon="@drawable/ic_favorites"
-        title="Favorite" />
+        title="Todo" />
     <tab
         id="@+id/tab_mine"
         icon="@drawable/ic_favorites"
