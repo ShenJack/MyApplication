@@ -1,6 +1,8 @@
 package com.example.pc_100.myapplication;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.pc_100.myapplication.data.MainContract;
 
 import rx.Observable;
 import rx.Observer;
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mLoadingIndicator;
     private String tag = "ReactiveX";
     private MainAdapter mMainAdapter;
+    private SQLiteDatabase mDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,5 +45,12 @@ public class MainActivity extends AppCompatActivity {
         mMainAdapter = new MainAdapter(this);
         mRecyclerView.setAdapter(mMainAdapter);
 
+    }
+
+    private long addNewModule(String name, int partySize) {
+        ContentValues cv = new ContentValues();
+        cv.put(MainContract.MainEntry.COLUMN_MODULE_NAME, name);
+        cv.put(MainContract.MainEntry.COLUMN_MODULE_DESCRIPTION, partySize);
+        return mDb.insert(MainContract.MainEntry.TABLE_NAME, null, cv);
     }
 }

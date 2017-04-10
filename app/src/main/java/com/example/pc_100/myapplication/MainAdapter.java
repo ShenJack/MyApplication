@@ -6,6 +6,7 @@ import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,14 +26,18 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainAdapterViewHolder
     @Override
     public MainAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layoutId;
-
+        MainAdapterViewHolder holder = new MainAdapterViewHolder(LayoutInflater
+                .from(mContext)
+                .inflate(R.layout.item_main,parent,false));
         // TODO: 2017/4/9 Make a layout
-        return null;
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(MainAdapterViewHolder holder, int position) {
-
+//        holder.backgroundView.setBackground();
+//        holder.nameView.setText();
+//        holder.descriptionView.setText();
     }
 
     public MainAdapter(@NonNull Context context ) {
