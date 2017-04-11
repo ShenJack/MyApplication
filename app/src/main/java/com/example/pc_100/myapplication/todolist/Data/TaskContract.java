@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
  */
 
 public class TaskContract {
+    public static final int PRIORITY_MAX = 3;
     public static final String AUTHORITY = "com.example.cp_100.myapplication.todolist";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://"+ AUTHORITY);
 
