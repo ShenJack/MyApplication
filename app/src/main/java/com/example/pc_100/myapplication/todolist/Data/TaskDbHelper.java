@@ -13,7 +13,7 @@ import static com.example.pc_100.myapplication.todolist.Data.TaskContract.TaskEn
 
 public class TaskDbHelper extends SQLiteOpenHelper {
     Context mContext;
-    private static final String DATABASE_NAME = "todolist";
+    private static final String DATABASE_NAME = "todolist.db";
     private static final int VERSION = 1;
     TaskDbHelper(Context context){
        super(context,TABLE_NAME,null,VERSION);
@@ -21,10 +21,10 @@ public class TaskDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String CREATE_TABLE = "CREATE TABLE" + TABLE_NAME + "(" +
-                TaskContract.TaskEntry._ID +"INTEGER PRIMARY KEY, " +
-                TaskContract.TaskEntry.COLOMN_DESCRIPTION + "TEXT NOT NULL，"+
-                TaskContract.TaskEntry.COLOMN_PRIORITY + "INTEGER NOT NULL " + ");";
+        final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+                TaskContract.TaskEntry._ID         +" INTEGER PRIMARY KEY, " +
+                TaskContract.TaskEntry.COLOMN_DESCRIPTION + " TEXT NOT NULL,"+
+                TaskContract.TaskEntry.COLOMN_PRIORITY + " INTEGER NOT NULL);";
         db.execSQL(CREATE_TABLE);
     }
 

@@ -31,24 +31,33 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.tasks_item_layout,parent,false);
+                .inflate(R.layout.tasks_item_layout, parent, false);
 
         return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
+        int idIndex = mCursor.getColumnIndex(TaskContract.TaskEntry._ID);
         int descriptionIndex = mCursor.getColumnIndex(TaskContract.TaskEntry.COLOMN_DESCRIPTION);
         int priorityIndex = mCursor.getColumnIndex(TaskContract.TaskEntry.COLOMN_PRIORITY);
-        mCursor.moveToPosition(position);
-        holder.textView_description.setText(mCursor.getString(descriptionIndex));
 
+
+        mCursor.moveToPosition(position);
+        final int id = mCursor.getInt(idIndex);
         int backgroundColor = getBackgroundColorByPriority(mCursor.getInt(priorityIndex));
+
+
+        holder.itemView.setTag(id);
+        holder.textView_description.setText(mCursor.getString(descriptionIndex));
         holder.constraintLayout.setBackgroundColor(getBackgroundColorByPriority(backgroundColor));
+
+
+
     }
 
-    private int getBackgroundColorByPriority(int priority){
-        switch (priority){
+    private int getBackgroundColorByPriority(int priority) {
+        switch (priority) {
             case 1:
                 return mContext.getResources().getColor(R.color.priority1);
             case 2:
@@ -62,13 +71,13 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
 
     @Override
     public int getItemCount() {
-        if(mCursor == null){
+        if (mCursor == null) {
             return 0;
         }
         return mCursor.getCount();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder{
+    class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView textView_description;
         ConstraintLayout constraintLayout;
 
@@ -78,14 +87,15 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
             textView_description = (TextView) itemView.findViewById(R.id.task_description);
         }
     }
-    Cursor swapCursor(Cursor cursor){
-        if(mCursor ==null){
+
+    Cursor swapCursor(Cursor cursor) {
+        if (mCursor == null) {
             return null;
         }
         Cursor temp = mCursor;
         mCursor = cursor;
 
-        if(cursor!=null){
+        if (cursor != null) {
             notifyDataSetChanged();
         }
         return temp;

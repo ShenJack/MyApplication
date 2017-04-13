@@ -85,9 +85,12 @@ public class TaskContentProvider extends ContentProvider {
                     returnUri = ContentUris.withAppendedId(TaskContract.TaskEntry.CONTENT_URI,id);
                 }
                 else throw new SQLException("Failed to insert row into " + uri);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         getContext().getContentResolver().notifyChange(uri,null);
-        return null;
+        return returnUri;
     }
 
     @Override

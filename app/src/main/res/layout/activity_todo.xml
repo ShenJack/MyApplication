@@ -13,25 +13,24 @@
         android:layout_width="57dp"
         android:layout_height="52dp"
         android:src="@android:drawable/ic_input_add"
-        android:layout_marginRight="26dp"
+        android:layout_marginRight="18dp"
         app:layout_constraintRight_toRightOf="@+id/todolist_recyclerview"
         app:layout_constraintBottom_toBottomOf="@+id/todolist_recyclerview"
-        android:layout_marginBottom="25dp"
-        tools:layout_editor_absoluteY="426dp"
-        tools:layout_editor_absoluteX="293dp" />
+        android:layout_marginBottom="20dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/todolist_recyclerview"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:layout_marginTop="0dp" />
 </android.support.constraint.ConstraintLayout>

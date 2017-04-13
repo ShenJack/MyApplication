@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
-    <!--<tab-->
-        <!--id="@+id/tab_modules"-->
-        <!--icon = "@draw"-->
-        <!--title="Module" />-->
-    <!--<tab-->
-        <!--id="@+id/tab_todo"-->
-        <!--icon="@drawable/ic_favorites"-->
-        <!--title="Todo" />-->
-    <!--<tab-->
-        <!--id="@+id/tab_mine"-->
-        <!--icon="@drawable/ic_favorites"-->
-        <!--title="Mine" />-->
-    <!--<tab-->
-        <!--id = "+id"-->
-        <!--/>-->
+    <tab
+        id="@+id/tab_modules"
+        icon="@drawable/ic_recents"
+        title="Module"
+        barColorWhenSelected="@color/colorAccent" />
+    <tab
+        id="@+id/tab_todo"
+        icon="@drawable/ic_favorites"
+        title="Todo"
+        barColorWhenSelected="#5D4037" />
+    <tab
+        id="@+id/tab_mine"
+        icon="@drawable/ic_friends"
+        title="Me"
+        barColorWhenSelected="#FF9800" />
 </tabs>

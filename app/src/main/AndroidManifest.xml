@@ -16,7 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".todolist.Data.TodoActivity"></activity>
+        <activity
+            android:name=".todolist.TodoActivity">
+
+        </activity>
+        <provider
+            android:authorities="com.example.cp_100.myapplication.todolist"
+            android:name=".todolist.Data.TaskContentProvider"
+            android:exported="false"
+            >
+            </provider>
     </application>
 
 </manifest>
