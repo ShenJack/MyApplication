@@ -27,7 +27,6 @@ import com.example.pc_100.myapplication.todolist.Data.TaskContract;
  */
 
 class NewTaskDialog extends AlertDialog {
-
     private EditText editTextDescription;
     private Button submitButton;
     private Button discardButton;
@@ -61,9 +60,6 @@ class NewTaskDialog extends AlertDialog {
                     Log.e("insert",contentValues.toString());
                     Toast.makeText(context, uri.toString(), Toast.LENGTH_SHORT).show();
                 }
-                Message msg = new Message();
-                TodoActivity todoActivity = new TodoActivity();
-                todoActivity.restartLoader();
                 cancel();
 
             }

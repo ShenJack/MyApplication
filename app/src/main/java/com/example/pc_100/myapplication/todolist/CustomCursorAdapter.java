@@ -85,7 +85,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
         holder.taskDescriptionView.setText(description);
         int backgroundColor = getBackgroundColorByPriority(priority);
 
-        holder.taskDescriptionView.setBackgroundColor(backgroundColor);
+//        holder.taskDescriptionView.setBackgroundColor(backgroundColor);
 
         // Programmatically set the text and color for the priority TextView
 
@@ -159,7 +159,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
             super(itemView);
 
             taskDescriptionView = (TextView) itemView.findViewById(R.id.task_description);
-            constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.background);
+//            constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.background);
 
         }
     }

@@ -1,53 +1,72 @@
 package com.example.pc_100.myapplication.todolist;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.pc_100.myapplication.R;
 import com.example.pc_100.myapplication.todolist.Data.TaskContract;
 
-public class TodoActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+import static android.widget.Toast.LENGTH_SHORT;
 
+/**
+ * Created by ShenJack on 2017/4/18.
+ */
 
+public class TodoFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private RecyclerView mTodolistRecyclerview;
     private FloatingActionButton floatingActionButton;
 
-    private TodoAdapter todoAdapter;
     private CustomCursorAdapter mAdapter;
+    private Context mContext;
+
+    public TodoFragment() {
+        super();
+    }
+
+
+
     private static final int LOADER_ID =746;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_todo,null);
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_todo);
 
-        mTodolistRecyclerview = (RecyclerView) findViewById(R.id.todolist_recyclerview);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
-        mTodolistRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mTodolistRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
 
-        todoAdapter = new TodoAdapter(this);
 
-        mAdapter = new CustomCursorAdapter(this);
+        mAdapter = new CustomCursorAdapter(mContext);
 
         mTodolistRecyclerview.setAdapter(mAdapter);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewTaskDialog newTaskDialog = new NewTaskDialog(TodoActivity.this);
+                NewTaskDialog newTaskDialog = new NewTaskDialog(mContext);
                 newTaskDialog.show();
                 newTaskDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
@@ -73,33 +92,33 @@ public class TodoActivity extends AppCompatActivity implements LoaderManager.Loa
                 Uri uri = TaskContract.TaskEntry.CONTENT_URI;
                 uri = uri.buildUpon().appendPath(stringId).build();
 
-                getContentResolver().delete(uri,null,null);
+                getActivity().getContentResolver().delete(uri,null,null);
 
-                getSupportLoaderManager().restartLoader(LOADER_ID, null, TodoActivity.this);
+                getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, TodoFragment.this);
             }
         }).attachToRecyclerView(mTodolistRecyclerview);
 
-        getSupportLoaderManager().initLoader(LOADER_ID,null,this);
-        Toast.makeText(this, "start", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportLoaderManager().initLoader(LOADER_ID,null,this);
+        Toast.makeText(getActivity(), "start", LENGTH_SHORT).show();
     }
 
 
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         Log.d("resume","resume");
         super.onResume();
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
 
     }
 
     void restartLoader(){
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new AsyncTaskLoader<Cursor>(this) {
+        return new AsyncTaskLoader<Cursor>(getActivity()) {
             Cursor mTaskData = null;
 
             @Override
@@ -115,7 +134,7 @@ public class TodoActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public Cursor loadInBackground() {
                 try {
-                    return getContentResolver().query(TaskContract.TaskEntry.CONTENT_URI
+                    return getActivity().getContentResolver().query(TaskContract.TaskEntry.CONTENT_URI
                             ,null
                             ,null
                             ,null
@@ -143,6 +162,4 @@ public class TodoActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
-
-
 }

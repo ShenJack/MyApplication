@@ -50,7 +50,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
 
         holder.itemView.setTag(id);
         holder.textView_description.setText(mCursor.getString(descriptionIndex));
-        holder.constraintLayout.setBackgroundColor(getBackgroundColorByPriority(backgroundColor));
+        holder.constraintLayout.setBackgroundColor(0);
 
 
 
