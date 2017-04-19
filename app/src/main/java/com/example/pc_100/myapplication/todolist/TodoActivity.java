@@ -34,7 +34,7 @@ public class TodoActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.fragment_todo);
 
         mTodolistRecyclerview = (RecyclerView) findViewById(R.id.todolist_recyclerview);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_bar);
 
         mTodolistRecyclerview.setLayoutManager(new LinearLayoutManager(this));
 

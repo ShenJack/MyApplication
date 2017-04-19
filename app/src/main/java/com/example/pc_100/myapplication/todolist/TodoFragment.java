@@ -30,37 +30,43 @@ import static android.widget.Toast.LENGTH_SHORT;
  */
 
 public class TodoFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private RecyclerView mTodolistRecyclerview;
-    private FloatingActionButton floatingActionButton;
 
     private CustomCursorAdapter mAdapter;
     private Context mContext;
+    private RecyclerView mTodolistRecyclerview;
+    private FloatingActionButton floatingActionButton;
+
+    public static TodoFragment newInstance(Context context) {
+        TodoFragment todoFragment = new TodoFragment();
+        todoFragment.mContext = context;
+        return todoFragment;
+    }
 
     public TodoFragment() {
         super();
     }
 
 
-
-    private static final int LOADER_ID =746;
+    private static final int LOADER_ID = 746;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_todo,null);
-        return view;
+        return inflater.inflate(R.layout.fragment_todo, null);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        View view = getView();
+            mTodolistRecyclerview = (RecyclerView) view.findViewById(R.id.todolist_recyclerview);
+            floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_action_bar);
+            Log.d("found","got");
 
         mTodolistRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
 
-
         mAdapter = new CustomCursorAdapter(mContext);
-
         mTodolistRecyclerview.setAdapter(mAdapter);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +83,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -92,27 +98,26 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
                 Uri uri = TaskContract.TaskEntry.CONTENT_URI;
                 uri = uri.buildUpon().appendPath(stringId).build();
 
-                getActivity().getContentResolver().delete(uri,null,null);
+                getActivity().getContentResolver().delete(uri, null, null);
 
                 getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, TodoFragment.this);
             }
         }).attachToRecyclerView(mTodolistRecyclerview);
 
-        getActivity().getSupportLoaderManager().initLoader(LOADER_ID,null,this);
+        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         Toast.makeText(getActivity(), "start", LENGTH_SHORT).show();
     }
 
 
-
     @Override
     public void onResume() {
-        Log.d("resume","resume");
+        Log.d("resume", "resume");
         super.onResume();
         getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
 
     }
 
-    void restartLoader(){
+    void restartLoader() {
         getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
@@ -123,10 +128,9 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
 
             @Override
             protected void onStartLoading() {
-                if(mTaskData!=null){
+                if (mTaskData != null) {
                     deliverResult(mTaskData);
-                }
-                else {
+                } else {
                     forceLoad();
                 }
             }
@@ -135,11 +139,11 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             public Cursor loadInBackground() {
                 try {
                     return getActivity().getContentResolver().query(TaskContract.TaskEntry.CONTENT_URI
-                            ,null
-                            ,null
-                            ,null
+                            , null
+                            , null
+                            , null
                             , TaskContract.TaskEntry.COLOMN_PRIORITY);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Log.e(" ", "Failed to asynchronously load data.");
                     e.printStackTrace();
                     return null;
@@ -153,6 +157,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         };
     }
+
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
