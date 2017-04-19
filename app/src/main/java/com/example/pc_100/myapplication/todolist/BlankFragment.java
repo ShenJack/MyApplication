@@ -1,10 +1,15 @@
 package com.example.pc_100.myapplication.todolist;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +26,7 @@ import com.example.pc_100.myapplication.R;
  * Use the {@link BlankFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BlankFragment extends Fragment {
+public class BlankFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private CustomCursorAdapter mAdapter;
     private Context mContext;
     private RecyclerView mTodolistRecyclerview;
@@ -37,6 +42,7 @@ public class BlankFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private static final int LOADER_ID = 746;
 
     public BlankFragment() {
         // Required empty public constructor
@@ -63,19 +69,32 @@ public class BlankFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mContext = getContext();
         View view = getView();
         mTodolistRecyclerview = (RecyclerView) view.findViewById(R.id.todolist_recyclerview);
-        mAdapter = new CustomCursorAdapter(mContext);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_action_bar);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewTaskDialog newTaskDialog = new NewTaskDialog(mContext);
+                newTaskDialog.show();
+                newTaskDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        restartLoader();
+                    }
+                });
+                mAdapter = new CustomCursorAdapter(mContext);
 
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+                if (getArguments() != null) {
+                    mParam1 = getArguments().getString(ARG_PARAM1);
+                    mParam2 = getArguments().getString(ARG_PARAM2);
+                }
+            }
+        });
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -119,5 +138,24 @@ public class BlankFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+}
+
+    void restartLoader() {
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
