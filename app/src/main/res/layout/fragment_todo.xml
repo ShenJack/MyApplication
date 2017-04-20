@@ -14,6 +14,7 @@
         android:layout_height="52dp"
         android:src="@android:drawable/ic_input_add"
         android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
         app:layout_constraintRight_toRightOf="@+id/todolist_recyclerview"
         app:layout_constraintBottom_toBottomOf="@+id/todolist_recyclerview"
         android:layout_marginBottom="20dp" />

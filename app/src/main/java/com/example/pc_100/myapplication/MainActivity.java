@@ -43,10 +43,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private ProgressBar mLoadingIndicator;
     private String tag = "ReactiveX";
-    private SQLiteDatabase mDb;
     private BottomBar bottomBar;
     private boolean initialized = false;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -60,24 +57,22 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                FragmentTransaction fragmentTransaction;
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 if(tabId == R.id.tab_todo){
                     BlankFragment fragment;
                     fragment =new BlankFragment();
-                    fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.content,fragment);
                     fragmentTransaction.commit();
                     // TODO: 2017/4/13 Use fragment instead
                 }
                 if(tabId == R.id.tab_modules){
                     MainFragment mainFragment = new MainFragment();
-                    fragmentTransaction = fragmentManager. beginTransaction();
                     fragmentTransaction.replace(R.id.content,mainFragment);
                     fragmentTransaction.commit();
                 }
             }
         });
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
 
 
